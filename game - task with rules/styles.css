@@ -48,8 +48,13 @@ section {
 }
 
 #monster h2,
+#game__over h2,
 #player h2 {
   margin: 0.25rem;
+}
+
+#game__over h3 {
+  margin: 0.2rem;
 }
 
 #controls {
