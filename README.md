@@ -1,2 +1,2 @@
 # Vue-internShip
-intenship lecture code
+intenship task code
