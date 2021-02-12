@@ -12,7 +12,7 @@
       <label>Email</label>
       <input type="email" v-model="email"/>
     </div>
-    <button @click.prevent="addNewContact">
+    <button @click="addNewContact(name, phone, email)">
       add contact
     </button>
   </form>
@@ -21,23 +21,14 @@
 <script>
 export default {
   name: "new-contact", // необезательное свойство 
-  emits: ["addNewContact"],
+  inject: ["addNewContact"],
   data() {
     return {
       name: '',
       phone: '',
       email: ''
     };
-  },
-  methods: {
-    addNewContact() {
-      this.$emit("addNewContact", 
-        this.name,
-        this.phone,
-        this.email,
-      )
-    }
-  },
+  }
 };
 </script>
 

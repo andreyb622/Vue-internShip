@@ -4,19 +4,11 @@
       <h1>My Friends</h1>
     </header>
     <ul>
-      <create-contact
-        @addNewContact="addNewContact"
-      ></create-contact>
+      <create-contact></create-contact>
       <friend-contact
-        v-for="friend in friends"
-        :name="friend.name"
-        :email-adress="friend.email"
-        :phone-number="friend.phone"
-        :valid="friend.valid"
+        v-for="(friend, index) in friends"
         :key="friend.id"
-        :id="friend.id"
-        @toggle-valid="toggleValid"
-        @deleteContact="deleteContact"
+        :id="index"
       ></friend-contact>
     </ul>
   </section>
@@ -31,11 +23,19 @@ export default {
     FriendContact,
     CreateContact
   },
+  provide() {
+    return {
+      friends: this.friends,
+      toggleValid: this.toggleValid,
+      deleteContact: this.deleteContact,
+      addNewContact: this.addNewContact
+    }
+  },
   data() {
     return {
       friends: [
         {
-          id: 1,
+          id: "man",
           name: "Manuel Lorenz",
           phone: "0123 45678 90",
           email: "manuel@localhost.com",
@@ -46,8 +46,7 @@ export default {
   },
   methods: {
     toggleValid(id) {
-      const friend = this.friends.find(friend=> friend.id === id)
-      friend.valid = !friend.valid
+      this.friends[id].valid = !this.friends[id].valid
     },
     deleteContact(id) {
       const deleteContact = this.friends.findIndex(friend=> friend.id === id)
@@ -55,8 +54,9 @@ export default {
       return this.friends
     },
     addNewContact(name, phone, email) {
+      event.preventDefault()
       this.friends.push({
-        id: this.friends.length+1,
+        id: Math.random(),
         name: name,
         phone: phone,
         email: email,

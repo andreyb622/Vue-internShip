@@ -1,24 +1,24 @@
 <template>
   <li>
     <h2>
-      <span>{{ name }} ({{ valid ? "valid" : "invalid" }})</span>
-      <button class="delete" @click="deleteContact">X</button>
+      <span>{{ friends[id].name }} ({{ friends[id].valid ? "valid" : "invalid" }})</span>
+      <button class="delete" @click="deleteContact(id)">X</button>
       <!-- при нажатии на данную кномпу должно происходить удаление контакта -->
     </h2>
     <button @click="toggleDetails">
       {{ detailsAreVisible ? "Hide" : "Show" }} Details
     </button>
-    <button @click="toggleValid">
+    <button @click="toggleValid(id)">
       Toggle Valid
     </button>
     <ul v-if="detailsAreVisible">
       <li>
         <strong>Phone:</strong>
-        {{ phoneNumber }}
+        {{ friends[id].phone }}
       </li>
       <li>
         <strong>Email:</strong>
-        {{ emailAdress }}
+        {{ friends[id].email }}
       </li>
     </ul>
   </li>
@@ -26,33 +26,8 @@
 
 <script>
 export default {
-  props: {
-    id: String,
-    name: {
-      type: String,
-      required: true,
-      default: "0", // function () => logic value
-      validator: function(value) {
-        return value.length > 0;
-      },
-    },
-    phoneNumber: String,
-    emailAdress: String,
-    valid: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  // emits:["toggle-valid"],
-  emits: {
-    "toggle-valid": function(id) {
-      if (id) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-  },
+  props: ["id"],
+  inject: ["friends", "toggleValid", "deleteContact"],
   name: "contact", // необезательное свойство 
   data() {
     return {
@@ -62,13 +37,6 @@ export default {
   methods: {
     toggleDetails() {
       this.detailsAreVisible = !this.detailsAreVisible;
-    },
-    toggleValid() {
-      console.log(1);
-      this.$emit("toggle-valid", this.id);
-    },
-    deleteContact() {
-      this.$emit('deleteContact', this.id)
     }
   },
 };
