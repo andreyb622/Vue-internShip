@@ -45,10 +45,12 @@ export default {
     logout() {
       this.auth = false
       localStorage.removeItem('auth')
+      this.$router.push("/auth")
     },
     login() {
       localStorage.setItem('auth', 'true')
       this.auth = true
+      this.$router.push("/users")
     }
   },
   created() {

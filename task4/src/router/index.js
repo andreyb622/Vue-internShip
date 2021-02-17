@@ -47,13 +47,13 @@ router.beforeEach(function(to, _from, next) {
       next()
     }
   }
-  // здесь можно расположить логику для гвардов (например редерект на auth, компонент который нужно создать)
-  // if (to.meta.needsAuth === true) {
-  //   console.log("Needs auth!");
-  //   next();
-  // } else {
-  //   next();
-  // }
+  if(to.path === '/auth') {
+    if(localStorage.getItem('auth')) {
+      next('/users')
+    } else {
+      next()
+    }
+  }
   next()
 });
 
