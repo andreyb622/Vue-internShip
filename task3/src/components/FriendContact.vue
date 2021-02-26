@@ -2,13 +2,12 @@
   <li>
     <h2>
       <span>{{ getFriends[id].name }} ({{ getFriends[id].valid ? "valid" : "invalid" }})</span>
-      <button class="delete" @click="removeContact(getFriends[id].id)">X</button>
-      <!-- при нажатии на данную кномпу должно происходить удаление контакта -->
+      <button class="delete" @click="deleteContact(getFriends[id].id)">X</button>
     </h2>
     <button @click="toggleDetails">
       {{ detailsAreVisible ? "Hide" : "Show" }} Details
     </button>
-    <button @click="toggleValid(getFriends[id].id)">
+    <button @click="changeValid(getFriends[id].id)">
       Toggle Valid
     </button>
     <ul v-if="detailsAreVisible">
@@ -41,12 +40,6 @@ export default {
   },
   methods: {
     ...mapActions(['deleteContact', 'changeValid']),
-    removeContact(id) {
-      this.deleteContact(id)
-    },
-    toggleValid(id){
-      this.changeValid(id)
-    },
     toggleDetails() {
       this.detailsAreVisible = !this.detailsAreVisible;
     }
