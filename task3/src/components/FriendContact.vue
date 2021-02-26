@@ -1,10 +1,12 @@
 <template>
   <li>
+    <div>{{ getFriends }}</div>
     <h2>
       <span>{{ friends[id].name }} ({{ friends[id].valid ? "valid" : "invalid" }})</span>
       <button class="delete" @click="deleteContact(id)">X</button>
       <!-- при нажатии на данную кномпу должно происходить удаление контакта -->
     </h2>
+    <div>{{ getFriends }}</div>
     <button @click="toggleDetails">
       {{ detailsAreVisible ? "Hide" : "Show" }} Details
     </button>
@@ -21,10 +23,13 @@
         {{ friends[id].email }}
       </li>
     </ul>
+    
   </li>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props: ["id"],
   inject: ["friends", "toggleValid", "deleteContact"],
@@ -33,6 +38,12 @@ export default {
     return {
       detailsAreVisible: false,
     };
+  },
+  created() {
+    console.log(mapGetters(['getFriends']))
+  },
+  computed: {
+    ...mapGetters(['getFriends'])
   },
   methods: {
     toggleDetails() {

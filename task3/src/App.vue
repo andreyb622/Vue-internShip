@@ -17,7 +17,8 @@
 <script>
 import FriendContact from "./components/FriendContact.vue";
 import CreateContact from "./components/CreateContact.vue";
-
+// import { mapGetters } from "vuex";
+ 
 export default {
   components: {
     FriendContact,
@@ -54,7 +55,6 @@ export default {
       return this.friends
     },
     addNewContact(name, phone, email) {
-      event.preventDefault()
       this.friends.push({
         id: Math.random(),
         name: name,

@@ -28,7 +28,14 @@ export default {
       phone: '',
       email: ''
     };
-  }
+  },
+  methods: {
+    resetForm() {
+      this.contactName = "";
+      this.contactPhone = "";
+      this.contactEmail = "";
+    }
+  },
 };
 </script>
 
