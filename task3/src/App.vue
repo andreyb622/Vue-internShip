@@ -26,17 +26,7 @@ export default {
   },
   computed: {
     ...mapGetters(['getFriends'])
-  },
-  provide() {
-    return {
-      toggleValid: this.toggleValid
-    }
-  },
-  methods: {
-    toggleValid(id) {
-      this.friends[id].valid = !this.friends[id].valid
-    }
-  },
+  }
 };
 </script>
 
