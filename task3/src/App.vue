@@ -6,7 +6,7 @@
     <ul>
       <create-contact></create-contact>
       <friend-contact
-        v-for="(friend, index) in friends"
+        v-for="(friend, index) in getFriends"
         :key="friend.id"
         :id="index"
       ></friend-contact>
@@ -17,51 +17,24 @@
 <script>
 import FriendContact from "./components/FriendContact.vue";
 import CreateContact from "./components/CreateContact.vue";
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
  
 export default {
   components: {
     FriendContact,
     CreateContact
   },
+  computed: {
+    ...mapGetters(['getFriends'])
+  },
   provide() {
     return {
-      friends: this.friends,
-      toggleValid: this.toggleValid,
-      deleteContact: this.deleteContact,
-      addNewContact: this.addNewContact
+      toggleValid: this.toggleValid
     }
-  },
-  data() {
-    return {
-      friends: [
-        {
-          id: "man",
-          name: "Manuel Lorenz",
-          phone: "0123 45678 90",
-          email: "manuel@localhost.com",
-          valid: true,
-        }
-      ],
-    };
   },
   methods: {
     toggleValid(id) {
       this.friends[id].valid = !this.friends[id].valid
-    },
-    deleteContact(id) {
-      const deleteContact = this.friends.findIndex(friend=> friend.id === id)
-      this.friends.splice(deleteContact, 1)
-      return this.friends
-    },
-    addNewContact(name, phone, email) {
-      this.friends.push({
-        id: Math.random(),
-        name: name,
-        phone: phone,
-        email: email,
-        valid: true,
-      })
     }
   },
 };

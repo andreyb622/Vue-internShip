@@ -12,16 +12,17 @@
       <label>Email</label>
       <input type="email" v-model="email"/>
     </div>
-    <button @click="addNewContact(name, phone, email)">
+    <button @click.prevent="addNewContact">
       add contact
     </button>
   </form>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
 export default {
   name: "new-contact", // необезательное свойство 
-  inject: ["addNewContact"],
   data() {
     return {
       name: '',
@@ -30,10 +31,19 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['addContact']),
+    addNewContact() {
+      this.addContact({
+        name: this.name,
+        phone: this.phone,
+        email: this.email
+        })
+      this.resetForm()
+    },
     resetForm() {
-      this.contactName = "";
-      this.contactPhone = "";
-      this.contactEmail = "";
+      this.name = "";
+      this.phone = "";
+      this.email = "";
     }
   },
 };

@@ -1,26 +1,24 @@
 <template>
   <li>
-    <div>{{ getFriends }}</div>
     <h2>
-      <span>{{ friends[id].name }} ({{ friends[id].valid ? "valid" : "invalid" }})</span>
-      <button class="delete" @click="deleteContact(id)">X</button>
+      <span>{{ getFriends[id].name }} ({{ getFriends[id].valid ? "valid" : "invalid" }})</span>
+      <button class="delete" @click="removeContact(getFriends[id].id)">X</button>
       <!-- при нажатии на данную кномпу должно происходить удаление контакта -->
     </h2>
-    <div>{{ getFriends }}</div>
     <button @click="toggleDetails">
       {{ detailsAreVisible ? "Hide" : "Show" }} Details
     </button>
-    <button @click="toggleValid(id)">
+    <button @click="toggleValid(getFriends[id].id)">
       Toggle Valid
     </button>
     <ul v-if="detailsAreVisible">
       <li>
         <strong>Phone:</strong>
-        {{ friends[id].phone }}
+        {{ getFriends[id].phone }}
       </li>
       <li>
         <strong>Email:</strong>
-        {{ friends[id].email }}
+        {{ getFriends[id].email }}
       </li>
     </ul>
     
@@ -28,24 +26,27 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   props: ["id"],
-  inject: ["friends", "toggleValid", "deleteContact"],
   name: "contact", // необезательное свойство 
   data() {
     return {
       detailsAreVisible: false,
     };
   },
-  created() {
-    console.log(mapGetters(['getFriends']))
-  },
   computed: {
     ...mapGetters(['getFriends'])
   },
   methods: {
+    ...mapActions(['deleteContact', 'changeValid']),
+    removeContact(id) {
+      this.deleteContact(id)
+    },
+    toggleValid(id){
+      this.changeValid(id)
+    },
     toggleDetails() {
       this.detailsAreVisible = !this.detailsAreVisible;
     }

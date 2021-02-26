@@ -20,14 +20,27 @@ export default {
     }
 },
   mutations: {
-
+    removeContact: (state, id) => state.friends = state.friends.filter(friend => friend.id !== id),
+    addNewContact: (state, {name, phone, email}) => {
+      state.friends.push({
+        id: Date.now(),
+        name: name,
+        phone: phone,
+        email: email,
+        valid: true,
+      })
+    },
+    toggleValid: (state, id) => {
+      const friend = state.friends.find(friend => friend.id === id)
+      friend.valid = !friend.valid
+    }
   },
   getters: {
-    getFriends(){
-      return state
-    } 
+    getFriends: state => state.friends
   },
   actions: {
-
+    deleteContact: (context, id) => context.commit('removeContact', id),
+    addContact: (context, {name, phone, email}) => context.commit('addNewContact', {name, phone, email}),
+    changeValid: (context, id) => context.commit('toggleValid', id)
   }
 }
